@@ -83,11 +83,12 @@ $table-striped-row-even-hover-background-color: lighten($grey-darker, 2);
 $pagination-color: $link;
 $pagination-border-color: $border;
 
-$navbar-height: 4rem;
+$navbar-height: 2rem;
 
-$navbar-background-color: $primary;
-$navbar-item-color: $text;
-$navbar-item-hover-color: $link;
+$navbar-background-color: darken($grey-darker, 8);
+$navbar-box-shadow-color: $vue-green;
+$navbar-item-color: $grey-dark;
+$navbar-item-hover-color: $vue-green;
 $navbar-item-hover-background-color: transparent;
 $navbar-item-active-color: $link;
 $navbar-dropdown-arrow: #fff;
@@ -98,6 +99,8 @@ $navbar-dropdown-item-hover-color: $grey-lighter;
 $navbar-dropdown-item-hover-background-color: transparent;
 $navbar-dropdown-item-active-background-color: transparent;
 $navbar-dropdown-item-active-color: $link;
+$navbar-breakpoint: 0;
+$navbar-box-shadow-size: 0 1px 0 0;
 
 $dropdown-content-background-color: $background;
 $dropdown-item-color: $text;
@@ -145,5 +148,3 @@ html, body{
 // This order is very important
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
-@import "~bulmaswatch/darkly/_overrides"
-
