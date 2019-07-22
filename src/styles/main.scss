@@ -54,6 +54,7 @@ $subtitle-strong-color: $grey-light;
 $text: #fff;
 $text-light: lighten($text, 10);
 $text-strong: darken($text, 5);
+$label-color: $subtitle-color;
 
 $link: $turquoise;
 $link-hover: lighten($link, 5);
@@ -61,11 +62,12 @@ $link-focus: darken($link, 5);
 $link-active: darken($link, 5);
 $link-focus-border: $grey-light;
 
-$button-color: $primary;
+$button-color: $grey-light;
 $button-hover-color: darken($text, 5); // text-dark
 $button-focus: darken($text, 5); // text-dark
 $button-active-color: darken($text, 5); // text-dark
-$button-disabled-background-color: $grey-light;
+$button-disabled-background-color: $grey-light; 
+
 
 $input-hover-color: $grey-light;
 $input-disabled-background-color: $grey-light;
@@ -101,6 +103,8 @@ $navbar-dropdown-item-active-background-color: transparent;
 $navbar-dropdown-item-active-color: $link;
 $navbar-breakpoint: 0;
 $navbar-box-shadow-size: 0 1px 0 0;
+
+$menu-item-active-background-color: $primary;
 
 $dropdown-content-background-color: $background;
 $dropdown-item-color: $text;
@@ -143,7 +147,19 @@ html, body{
     background-color: darken($grey-darker, 8);
     border-right: solid $green;
 }
-
+.fullheight{
+    // Must take navbar into account
+    height: calc(100vh - 2rem);
+}
+.size-toggle{
+    color: $grey;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.size-toggle:hover{
+    color: $grey-light;
+}
 // Import Bulma and Buefy styles
 // This order is very important
 @import "~bulma";

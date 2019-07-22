@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-desktop is-vcentered fullheight">
+    <div class="columns is-desktop is-vcentered fullheight" id="main-view">
         <link href="https://fonts.googleapis.com/css?family=Archivo+Black&display=swap" rel="stylesheet">
         <div class="column is-marginless is-paddingless" id="text-column">
             <div class="wrapper">            
@@ -24,9 +24,6 @@ export default {
 </script>
 
 <style>
-.fullheight{
-    height: 100vh;
-}
 #text-column{
     height: 50vh;
     display: flex;
@@ -41,5 +38,8 @@ export default {
 .main{
     font-size: 10vw;
     font-family: "Archivo Black", sans-serif;
+}
+#main-view{
+    -webkit-user-select: none;
 }
 </style>

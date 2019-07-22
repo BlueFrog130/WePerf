@@ -7,6 +7,14 @@ import {
 } from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
+//Setting window height/width
+const Store = require('electron-store')
+const store = new Store({
+  defaults:{ 
+    windowBounds:{ width: 800, height: 600 }
+  }
+})
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -15,8 +23,10 @@ let win
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }])
 
 function createWindow () {
+  let { width, height } = store.get('windowBounds')
+
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600, frame: false, minWidth: 800, minHeight: 600, webPreferences: {
+  win = new BrowserWindow({ width, height, frame: false, minWidth: 800, minHeight: 600, webPreferences: {
     nodeIntegration: true
   } })
 
@@ -32,6 +42,11 @@ function createWindow () {
 
   win.on('closed', () => {
     win = null
+  })
+
+  win.on('resize', () => {
+    let {width, height} = win.getBounds()
+    store.set('windowBounds', { width, height });
   })
 
   // Removes menu bar in prod

@@ -11,6 +11,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: () => import('./views/MainView')
+    },
+    {
+      path: '/iperf',
+      name: 'iperf',
+      component: () => import('./views/iPerfView')
     }
   ]
 })
