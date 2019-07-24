@@ -8,7 +8,6 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import VueShortkey from 'vue-shortkey'
 
 library.add(fab, far, fas)
 Vue.component('fa-icon', FontAwesomeIcon)
@@ -19,9 +18,6 @@ Vue.use(buefy, {
   defaultIconComponent: 'fa-icon',
   defaultIconPack: 'fas'
 })
-
-Vue.use(VueShortkey)
-
 
 new Vue({
   router,

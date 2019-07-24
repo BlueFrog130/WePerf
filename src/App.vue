@@ -6,7 +6,7 @@
           <side-menu class="fullheight"></side-menu>
         </div>
       <div class="column">
-        <router-view class="fullheight"/>
+          <router-view class="fullheight"/>
       </div>
     </div>
   </div>
@@ -29,5 +29,10 @@ export default {
 
 <style lang="scss">
 @import './styles/main';
-
+.route-transition-enter-active, .route-transition-leave-active{
+    transition: opacity 500ms ease;
+}
+.route-transition-enter, .route-transition-leave-to{
+    opacity: 0;
+}
 </style>

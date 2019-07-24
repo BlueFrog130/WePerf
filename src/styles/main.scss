@@ -3,7 +3,8 @@
 
 $family-sans-serif: "Source Sans Pro", sans-serif;
 
-// Dark Scheme
+/*
+// Dark Theme
 $grey-lighter: #dbdee0;
 $grey-light:   #8c9b9d;
 $grey:         darken($grey-light, 18);
@@ -20,10 +21,7 @@ $red: #e74c3c;
 $white-ter: #ecf0f1;
 $primary: #375a7f !default;
 $yellow-invert: #fff;
-$vue-green: #41b883;
-$vue-green-invert: #fff;
-$vue-blue: #34495e;
-$vue-blue-invert: #fff;
+
 
 $family-monospace: "Inconsolata", "Consolas", "Monaco", monospace;
 
@@ -112,27 +110,12 @@ $dropdown-item-color: $text;
 $progress-value-background-color: $grey-lighter;
 
 $bulmaswatch-import-font: false;
-
-// Import Bulma's core
-@import "~bulma/sass/utilities/_all";
-
-// Set colors
+*/
 
 
-// Setup $colors to use as bulma classes (e.g. 'is-twitter')
-$colors: (
-    "white": ($white, $black),
-    "black": ($black, $white),
-    "light": ($light, $light-invert),
-    "dark": ($dark, $dark-invert),
-    "primary": ($primary, $primary-invert),
-    "info": ($info, $info-invert),
-    "success": ($success, $success-invert),
-    "warning": ($warning, $warning-invert),
-    "danger": ($danger, $danger-invert),
-    "vue-green": ($vue-green, $vue-green-invert),
-    "vue-blue": ($vue-blue, $vue-blue-invert)
-);
+
+@import "./variables";
+
 html, body{
     height: 100%;
     margin: 0;
@@ -142,25 +125,17 @@ html, body{
 ::-webkit-scrollbar{
     display: none;
 }
-.side-menu{
-    padding: 20px 0 0 10px;
-    background-color: darken($grey-darker, 8);
-    border-right: solid $green;
-}
+
 .fullheight{
     // Must take navbar into account
     height: calc(100vh - 2rem);
-}
-.size-toggle{
-    color: $grey;
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-.size-toggle:hover{
-    color: $grey-light;
 }
 // Import Bulma and Buefy styles
 // This order is very important
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
+
+.side-menu{
+    padding: 10px 10px 0 10px;
+    background-color: $navbar-box-shadow-color;
+}

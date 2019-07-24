@@ -33,7 +33,7 @@ export default {
 .wrapper{
     width: 50%;
     text-align: center;
-    opacity: 0.5;
+    opacity: 0.75;
 }
 .main{
     font-size: 10vw;

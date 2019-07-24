@@ -1,25 +1,38 @@
 <template>
     <aside class="menu fullheight" :class="{'menu-full':!compact,'menu-small':compact }" style="position: relative">
-        <p class="menu-label">Menu</p>
+        
         <ul class="menu-list">
             <li>
-                <router-link active-class="is-active" to="/iperf">
+                <a @click="compact = !compact">
+                    <div class="link">
+                        <b-icon class="menu-icon" icon="bars" size="is-small"/>
+                        <transition name="menu-text">
+                            <span v-show="!compact">Hide</span>
+                        </transition>        
+                    </div>    
+                </a>
+            </li>
+            <li>
+                <router-link class="inactive" active-class="is-active" to="/iperf">
                     <div class="link">
                         <b-icon class="menu-icon" icon="wifi" size="is-small"/>
-                        <span v-show="!compact">iPerf</span>
+                        <transition name="menu-text">
+                            <span v-show="!compact">iPerf</span>
+                        </transition>
                     </div>
                 </router-link>
             </li>
             <li>
-                <router-link exact-active-class="is-active" to="/" exact>
+                <router-link class="inactive" exact-active-class="is-active" to="/" exact>
                     <div class="link">
                         <b-icon class="menu-icon" icon="network-wired" size="is-small"/>
-                        <span v-show="!compact">Mininet</span>
+                        <transition name="menu-text">
+                            <span v-show="!compact">Mininet</span>
+                        </transition>
                     </div>
                 </router-link>
             </li>
         </ul>
-        <a class="size-toggle" @click="compact = !compact"><b-icon size="is-small" icon="bars"/></a>
     </aside>
 </template>
 
@@ -61,9 +74,25 @@ export default {
 }
 
 .menu-full{
-    width: 150px;
+    width: 125px;
 }
 .menu-small{
     width: 50px;
+}
+.menu{
+    transition: all .5s ease;
+    overflow: hidden;
+}
+.menu-text-enter-active, .menu-text-leave-active{
+    transition: opacity .75s;
+}
+.menu-text-enter, .menu-text-leave-to{
+    opacity: 0
+}
+.is-active{
+    transition: all .5s ease
+}
+.inactive{
+    transition: all .5s ease
 }
 </style>
