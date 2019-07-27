@@ -18,7 +18,8 @@ export default new Vuetify({
         warning: '#FFD600', // Yellow A700 
         info: '#01579B', // Light Blue 900 
         success: '#C6FF00', // Lime A400
-        background: '#E8EAF6' // Indigo 50
+        background: '#E8EAF6', // Indigo 50
+        backgroundDarkened: '#c5cae8', // Background darkened by 10%
       }
     }
   }

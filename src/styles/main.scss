@@ -1,6 +1,9 @@
 
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:100,300,400,500,700,900');
 
 @import '~vuetify/src/styles/styles.sass';
 
-$body-font-family: "Source Sans Pro", sans-serif;
+// Shared styles
+.no-highlight{
+    -webkit-user-select: none;
+}

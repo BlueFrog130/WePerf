@@ -19,7 +19,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/vue-fontawesome": "^0.1.6",
     "@rauschma/stringio": "^1.4.0",
-    "animate.css": "^3.7.2",
     "core-js": "^2.6.5",
     "electron-store": "^4.0.0",
     "ssh2": "^0.8.5",

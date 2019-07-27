@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, globalShortcut } from 'electron'
 import {
   createProtocol,
   installVueDevtools
@@ -14,6 +14,7 @@ const store = new Store({
     windowBounds:{ width: 800, height: 600 }
   }
 })
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -29,6 +30,10 @@ function createWindow () {
   win = new BrowserWindow({ width, height, frame: false, minWidth: 800, minHeight: 600, webPreferences: {
     nodeIntegration: true
   } })
+
+  globalShortcut.register('f5', () => {
+    win.reload();
+  })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
