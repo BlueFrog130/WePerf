@@ -3,7 +3,7 @@
         
         <ul class="menu-list">
             <li>
-                <a @click="compact = !compact">
+                <a @click="compact = !compact" id="bars">
                     <div class="link">
                         <b-icon class="menu-icon" icon="bars" size="is-small"/>
                         <transition name="menu-text">
@@ -46,7 +46,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "../styles/_variables";
 .menu-icon{
     margin-left: calc(-0.375em - 1px);
     margin-right: 0.5em;
@@ -94,5 +95,11 @@ export default {
 }
 .inactive{
     transition: all .5s ease
+}
+#bars{
+    transition: all .5s ease;
+}
+#bars:hover{
+    background-color: darken($navbar-box-shadow-color, 10%);
 }
 </style>

@@ -10,6 +10,7 @@ $vue-blue-invert: #fff;
 $navbar-height: 2rem;
 $navbar-box-shadow-color: $grey-light;
 $navbar-background-color: lighten($grey-light, 10%);
+$navbar-breakpoint: 0;
 
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: (

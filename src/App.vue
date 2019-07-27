@@ -1,38 +1,18 @@
 <template>
-  <div id="app">
-    <nav-bar/>
-    <div class="columns is-marginless">
-        <div class="column fullheight is-narrow side-menu">
-          <side-menu class="fullheight"></side-menu>
-        </div>
-      <div class="column">
-          <router-view class="fullheight"/>
-      </div>
-    </div>
-  </div>
+  <v-app>
+    <application-bar style="max-height: 48px"/>
+    <v-content>
+      Content!
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import Menu from './components/Menu'
-import Navbar from './components/Navbar'
-
+import ApplicationBar from './components/ApplicationBar'
 export default {
-  components:{
-    'side-menu': Menu,
-    'nav-bar': Navbar,
+  name: 'App',
+  components: {
+    ApplicationBar
   },
-  methods:{
-    
-  }
-}
+};
 </script>
-
-<style lang="scss">
-@import './styles/main';
-.route-transition-enter-active, .route-transition-leave-active{
-    transition: opacity 500ms ease;
-}
-.route-transition-enter, .route-transition-leave-to{
-    opacity: 0;
-}
-</style>

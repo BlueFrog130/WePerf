@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar has-shadow titlebar">
+    <nav class="navbar is-info has-shadow titlebar">
         <div class="navbar-menu">
             <div class="navbar-start">
                 
@@ -11,7 +11,7 @@
                 <a @click="maximize()" class="navbar-item">
                     <b-icon size="is-small" icon="window-maximize"></b-icon>
                 </a>
-                <a @click="close()" class="navbar-item">
+                <a @click="close()" class="navbar-item" id="navbar-close">
                     <b-icon size="is-small" icon="times"></b-icon>
                 </a>
             </div>
@@ -43,7 +43,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import "../styles/_variables";
     .titlebar{
         -webkit-user-select: none;
         -webkit-app-region: drag;
@@ -53,6 +54,10 @@ export default {
     }
     a{
         -webkit-app-region: no-drag;
+    }
+    #navbar-close:hover{
+        color: $white;
+        background-color: $danger;
     }
 
 </style>

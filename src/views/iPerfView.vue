@@ -19,7 +19,7 @@
             <div class="tile is-child has-middle-border" :class="{'dev-mode' : devMode}">
                 <h2 class="has-text-centered subtitle is-2">Client</h2>
                 <b-field><b-checkbox-button type="is-success" :native-value="true" v-model="iperf.client.remote"><b-icon :icon="booleanIcon(iperf.client.remote)"></b-icon><span>Remote</span></b-checkbox-button></b-field>
-                <div class="remote-container" :class="{'remote-hidden':!iperf.client.remote,'remote-shown':iperf.client.remote}">
+                <div class="remote-container" :class="{'remote-container-enabled':iperf.client.remote}">
                     <h2 class="subtitle has-text-danger">Not Implemented</h2>
                 </div>
                 <b-field grouped>
@@ -55,8 +55,10 @@
                         <b-input validation-message=" " min="0.0" step="0.1" type="number" style="width: 5rem" v-model="iperf.client.interval"/>                        
                     </b-field>
                 </b-field>
-                
-                
+                <div class="has-text-centered buttons">
+                    <button class="button is-success" @click="jsonTest()">iPerfTest</button>
+                </div>
+                <div>{{data}}</div>
             </div>
             <div class="tile is-child has-middle-border" :class="{'dev-mode' : devMode, 'is-1':collapseServer, 'is-6':!collapseServer}">
                     <h2 class="has-text-centered subtitle is-2">Server</h2>
@@ -73,6 +75,11 @@
 </template>
 
 <script>
+import path from 'path'
+
+const {spawn} = require('child_process');
+const {remote} = require('electron')
+
 export default {
     data(){
         return{
@@ -92,21 +99,23 @@ export default {
                 server:{
                     interval: null,
                 }
-            }
+            },
+            data: null
         }
     },
     methods:{
         booleanIcon(value){
             return value ? 'check' : 'times'
         },
-        addTest(){
-            this.$store.dispatch('addIperf', 'blep')
-            console.log(this.$store.state.iperfs)
+        async jsonTest(){
+            this.data = {}
+            const iperfPath = path.join(remote.app.getAppPath(), '../src/assets/iperf/win/iperf3.exe')
+
+            const client = spawn(iperfPath, ['-c', '192.168.1.196', '-J'])
+            client.stdout.on('data', (clientData) => {
+                this.data = JSON.parse(clientData)
+            })
         },
-        deleteTest(){
-            this.$store.dispatch('removeIperf', 'blep')
-            console.log(this.$store.state.iperfs)
-        }
     }
 }
 </script>
@@ -138,7 +147,7 @@ export default {
     border: solid black;
 }
 .tile{
-    transition: all 1s ease;
+    -webkit-transition: all 1s ease;
     position: relative;
 }
 .is-child{
@@ -160,15 +169,14 @@ export default {
 .server-toggle:hover{
     color: darken($navbar-box-shadow-color, 10%)
 }
-.remote-hidden{
-    height: 0;
-    overflow: hidden;
-}
-.remote-shown{
-    height: 100px;
-    overflow: hidden;
-}
+
 .remote-container{
-    transition: all 0.25s ease;
+    -webkit-transition: all 1s ease;
+    overflow: hidden;
+    max-height: 0px;
+    position: relative;
+}
+.remote-container-enabled{
+    max-height: 50px;
 }
 </style>

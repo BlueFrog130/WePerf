@@ -7,15 +7,6 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: () => import('./views/MainView')
-    },
-    {
-      path: '/iperf',
-      name: 'iperf',
-      component: () => import('./views/iPerfView')
-    }
+    
   ]
 })
