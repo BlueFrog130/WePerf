@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Iperf from './views/Iperf.view'
-import Mininet from './views/Mininet.view'
+import Iperf from './views/Iperf.view.vue'
+import Mininet from './views/Mininet.view.vue'
 
 
 Vue.use(Router)
