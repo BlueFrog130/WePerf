@@ -1,5 +1,5 @@
 <template>
-  <v-app id="main">
+  <v-app id="main" :style="{background: $vuetify.theme.themes[theme].background}">
     <application-bar/>
     <navigation-menu/>
     <v-content>
@@ -13,12 +13,25 @@
 <script>
 import ApplicationBar from './components/ApplicationBar'
 import NavigationMenu from './components/NavigationMenu'
+
 export default {
   name: 'App',
   components: {
     ApplicationBar,
     NavigationMenu
   },
+  mounted(){
+    document.addEventListener('keyup', (event) => {
+      if(event.keyCode == 112){
+        this.$router.push('/')
+      }
+    })
+  },
+  computed:{
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    }
+  }
 };
 </script>
 
@@ -29,6 +42,5 @@ export default {
 #main{
   height: 100vh;
   width: 100vw;
-  background-color: #E8EAF6;
 }
 </style>

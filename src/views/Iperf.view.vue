@@ -10,7 +10,7 @@
                             <v-btn v-on="on">Presets</v-btn>
                         </template>
                         <v-list>
-                            <v-list-item v-for="i in 5" :key="i" @click="">
+                            <v-list-item v-for="i in 5" :key="i" @click="() => {}">
                                 <v-list-item-title>Yolo</v-list-item-title>
                             </v-list-item>
                         </v-list>
@@ -39,10 +39,20 @@
     </v-container>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import { Iperf } from '@/models/Iperf'
 
-}
+export default Vue.extend({
+    props:{
+        preset:{
+            type: Object,
+            default(){
+                return null
+            }
+        }
+    }
+})
 </script>
 
 <style lang="scss">
