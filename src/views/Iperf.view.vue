@@ -10,8 +10,8 @@
                             <v-btn v-on="on">Presets</v-btn>
                         </template>
                         <v-list>
-                            <v-list-item v-for="i in 5" :key="i" @click="() => {}">
-                                <v-list-item-title>Yolo</v-list-item-title>
+                            <v-list-item v-for="(preset, i) in presets" :key="i" @click="selectedPreset = preset">
+                                <v-list-item-title>{{preset.name}}</v-list-item-title>
                             </v-list-item>
                         </v-list>
                     </v-menu>
@@ -22,7 +22,7 @@
             <v-layout fill-height fluid>
                 <!-- Client -->
                 <v-flex>
-                    
+                    <client :preset="selectedPreset"/>
                 </v-flex>
                 <v-divider vertical/>
                 <!-- Server -->
@@ -42,14 +42,21 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Iperf } from '@/models/Iperf'
+import Client from '@/components/iperf/client.vue'
 
 export default Vue.extend({
-    props:{
-        preset:{
-            type: Object,
-            default(){
-                return null
-            }
+    data(){
+        return{
+            selectedPreset: {} as Iperf,
+            iperf: {} as Iperf
+        }
+    },
+    components: { 
+        Client
+    },
+    computed: {
+        presets():Array<Iperf>{
+            return this.$store.state.presets.iperf
         }
     }
 })

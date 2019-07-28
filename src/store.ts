@@ -1,7 +1,7 @@
 // Central store
 
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex from 'vuex' 
 import iperf from './models/iperf.store'
 import presets from './models/presets.store'
 

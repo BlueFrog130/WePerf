@@ -1,7 +1,7 @@
 export class Iperf {
     // TODO: Add all iperf options
-
     // Properties
+    public name?:String;
     public interval:Number;
     public format:Format;
     public client:Client;
@@ -9,7 +9,8 @@ export class Iperf {
 
 
     // Constructors
-    constructor(interval:Number = 1, format:Format = Format.M, client:Client, server:Server){
+    constructor(name:String, interval:Number = 1, format:Format = Format.M, client:Client, server:Server){
+        this.name = name
         this.interval = interval
         this.format = format
         this.client = client

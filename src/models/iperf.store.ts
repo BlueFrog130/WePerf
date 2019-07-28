@@ -19,7 +19,7 @@ export default {
             state.iperfs = [...state.iperfs, iperf]
         },
         removeIperf(state, iperf){
-            state.iperfs = state.iperfs.filter(i => i !== iperf)
+            state.iperfs = state.iperfs.filter((i: any) => i !== iperf)
         },
     },
     actions: {
