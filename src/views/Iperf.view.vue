@@ -1,13 +1,16 @@
 <template>
     <v-container fill-height>
-        <v-layout fluid column>
+        <v-layout column>
             <!-- Header -->
             <v-flex >
-                <v-layout justify-space-between fluid align-center>
+                <v-layout justify-space-between align-center>
                     <h3 class="display-3 font-weight-medium no-highlight">iPerf</h3>
                     <v-menu offset-y transition="scale-transition">
                         <template v-slot:activator="{ on }">
-                            <v-btn v-on="on">Presets</v-btn>
+                            <v-badge slot="" color="accent" overlap>
+                                <span slot="badge">{{presets.length}}</span>
+                                <v-btn v-on="on" :disabled="presets.length == 0">Presets</v-btn>
+                            </v-badge>
                         </template>
                         <v-list>
                             <v-list-item v-for="(preset, i) in presets" :key="i" @click="selectedPreset = preset">
@@ -22,7 +25,7 @@
             <v-layout fill-height fluid>
                 <!-- Client -->
                 <v-flex>
-                    <client :preset="selectedPreset"/>
+                    <client :iperf.sync="iperf"/>
                 </v-flex>
                 <v-divider vertical/>
                 <!-- Server -->
@@ -48,7 +51,7 @@ export default Vue.extend({
     data(){
         return{
             selectedPreset: {} as Iperf,
-            iperf: {} as Iperf
+            iperf: new Iperf()
         }
     },
     components: { 

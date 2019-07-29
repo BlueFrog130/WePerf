@@ -1,8 +1,8 @@
 <template>
     <nav>
-        <v-navigation-drawer expand-on-hover :mini-variant-width="64" :width="175" permanent app color="backgroundDarkened">
+        <v-navigation-drawer expand-on-hover :mini-variant-width="64" :width="175" permanent app color="sidebar">
             <template v-slot:prepend>
-                <v-list nav dense color="backgroundDarkened">
+                <v-list nav dense color="sidebar">
                     <v-list-item color="accent" v-for="route in routes" :key="route.name" :to="{path: route.path}" link>
                         <v-list-item-action><v-icon>{{route.icon}}</v-icon></v-list-item-action>
                         <v-list-item-content>{{route.title}}</v-list-item-content>

@@ -2,19 +2,18 @@ export class Iperf {
     // TODO: Add all iperf options
     // Properties
     public name?:String;
-    public interval:Number;
-    public format:Format;
+    public interval?:Number;
+    public format?:Format;
     public client:Client;
     public server:Server;
 
-
     // Constructors
-    constructor(name:String, interval:Number = 1, format:Format = Format.M, client:Client, server:Server){
-        this.name = name
-        this.interval = interval
-        this.format = format
-        this.client = client
-        this.server = server
+    constructor(iperf?:perf){
+        this.name = iperf && iperf.name
+        this.interval = iperf && iperf.interval
+        this.format = iperf && iperf.format
+        this.client = { protocol: Protocol.TCP }
+        this.server = {}
     }
 
     // Methods
@@ -36,16 +35,22 @@ export class Iperf {
         return cmd
     }
 }
-
+export interface perf{
+    name?:String,
+    interval?:Number,
+    format?:Format,
+    client:Client,
+    server:Server
+}
 export interface Client{
-    remote:String,    // NOT IPERF -- option to ssh into another device and run ssh
-        host:String,      // -c | host IP
-        protocol:Protocol,  // -u | sets udp (default tcp)
-        bandwidth:Number, // -b n[units] | bandwidth in [units]bits/s
-        units:Units,     // K/M | kbit/s or mbit/s
-        time:Number,      // -t n | seconds to run
-        reverse?:Boolean,   // -R | reverses flow
-        omit?:Number,      // -O n | omits first n seconds
+    remote?:String,    // NOT IPERF -- option to ssh into another device and run ssh
+    host?:String,      // -c | host IP
+    protocol:Protocol,  // -u | sets udp (default tcp)
+    bandwidth?:Number, // -b n[units] | bandwidth in [units]bits/s
+    units?:Units,     // K/M | kbit/s or mbit/s
+    time?:Number,      // -t n | seconds to run
+    reverse?:Boolean,   // -R | reverses flow
+    omit?:Number,      // -O n | omits first n seconds
         // Client options not included: 
         //      --sctp | uses sctp rather than tcp
         //      -n n[KM] | number of buffers to transmit
@@ -67,16 +72,15 @@ export interface Server{
     remote?:String, // NOT IPERF -- option to ssh into another device and run ssh
 }
 
-//Private enum
-enum Protocol{
+export enum Protocol{
     TCP = "TCP",
     UDP = "UDP"
 }
-enum Units{
+export enum Units{
     K = "K",
     M = "M"
 }
-enum Format{
+export enum Format{
     k = "k", //kbit/s
     m = "m", //mbit/s
     K = "K", //kbyte/s

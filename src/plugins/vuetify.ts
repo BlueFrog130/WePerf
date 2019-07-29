@@ -10,28 +10,29 @@ export default new Vuetify({
     iconfont: 'mdi',
   },
   theme:{
+    dark: true,
     themes:{
       light:{
-        primary: colors.purple, // Purple 500
-        secondary: colors.blue.lighten1, // Blue 400
-        accent: colors.indigo.darken1, // Custom Indigo
-        error: colors.amber.darken4, // Amber 900
-        warning: colors.yellow.accent4, // Yellow A700 
-        info: colors.lightBlue.darken4, // Light Blue 900 
-        success: colors.lime.accent3, // Lime A400
-        background: colors.indigo.lighten5, // Indigo 50
-        backgroundDarkened: colors.indigo.lighten4, // Background darkened by 10%
+        primary: colors.purple.base,
+        secondary: colors.blue.lighten1,
+        accent: colors.indigo.darken1, 
+        error: colors.amber.darken4, 
+        warning: colors.yellow.accent4,
+        info: colors.lightBlue.darken4, 
+        success: colors.lime.accent3,
+        background: colors.indigo.lighten5,
+        sidebar: colors.indigo.lighten4,
       },
       dark:{
-        primary: colors.purple, // Purple 500
-        secondary: colors.blue, // Blue 400
-        accent: colors.indigo, // Custom Indigo
-        error: colors.amber, // Amber 900
-        warning: colors.yellow, // Yellow A700 
-        info: colors.lightBlue, // Light Blue 900 
-        success: colors.lime, // Lime A400
-        background: '#424242',
-        backgroundDarkened: colors.indigo, // Background darkened by 10%
+        primary: colors.pink.darken4,
+        secondary: colors.indigo.darken3,
+        accent: colors.pink.accent4,
+        error: colors.deepOrange.darken2,
+        warning: colors.yellow.darken3, 
+        info: colors.lightBlue.darken3, 
+        success: colors.lime.darken3,
+        background: colors.grey.darken3,
+        sidebar: colors.grey.darken2,
       }
     }
   }
