@@ -29,7 +29,7 @@ export default new Vuetify({
         accent: colors.pink.accent4,
         error: colors.deepOrange.darken2,
         warning: colors.yellow.darken3, 
-        info: colors.lightBlue.darken3, 
+        info: colors.lightBlue.darken2, 
         success: colors.lime.darken3,
         background: colors.grey.darken3,
         sidebar: colors.grey.darken2,

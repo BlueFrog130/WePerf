@@ -12,27 +12,53 @@ export class Iperf {
         this.name = iperf && iperf.name
         this.interval = iperf && iperf.interval
         this.format = iperf && iperf.format
-        this.client = { protocol: Protocol.TCP }
+        this.client = { protocol: Protocol.TCP, units: Units.K, reverse: false }
         this.server = {}
     }
 
     // Methods
-    public getClientCommand():String {
-        var cmd = 'iperf -J' // Forces JSON result
-        cmd = `${cmd} -c ${this.client.host}`
-        cmd = `${cmd} -f ${this.format}`
-        cmd = `${cmd} -i ${this.interval}`
-        cmd = (this.client.protocol == Protocol.UDP) ? `${cmd} -u` : cmd
-        cmd = `${cmd} -b ${this.client.bandwidth}${this.client.units}`
-        cmd = `${cmd} -t ${this.client.time}`
-        cmd = (this.client.reverse == true) ? `${cmd} -R` : cmd
-        cmd = (this.client.omit != undefined && this.client.omit > 0) ? `${cmd} -O ${this.client.omit}` : cmd
-        return cmd
+    public getClientCommand():Array<String> {
+        var arr = new Array<String>()
+        arr.push('-J')
+        if(this.client && this.client.host) {
+            arr.push('-c')
+            arr.push(this.client.host)
+        }
+        if(this.format){
+            arr.push('-f')
+            arr.push(this.format)
+        }
+        if(this.interval){
+            arr.push('-i')
+            arr.push(this.interval.toString())
+        }
+        if(this.client && this.client.protocol == Protocol.UDP){
+            arr.push('-u')
+        }
+        if(this.client && this.client.bandwidth && this.client.units){
+            arr.push('-b')
+            arr.push(`${this.client.bandwidth}${this.client.units}`)
+        }
+        if(this.client && this.client.time){
+            arr.push('-t')
+            arr.push(this.client.time.toString())
+        }
+        if(this.client.reverse == true){
+            arr.push('-R')
+        }
+        if(this.client.omit){
+            arr.push('-O')
+            arr.push(this.client.omit.toString())
+        }
+        console.log(arr)
+        return arr
     }
-    public getServerCommand():String {
-        var cmd = 'iperf -J' // Forces JSON result
-        cmd = `${cmd} -s`
-        return cmd
+    public getServerCommand():Array<String> {
+        var arr = new Array<String>()
+        arr.push('-J')
+        arr.push('-s')
+        console.log(arr)
+        return arr
     }
 }
 export interface perf{

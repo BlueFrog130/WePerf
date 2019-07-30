@@ -30,13 +30,13 @@
                 <v-divider vertical/>
                 <!-- Server -->
                 <v-flex>
-                    
+                    <server :iperf.sync="iperf"/>
                 </v-flex>
             </v-layout>
             <v-divider/>
             <!-- Graph -->
             <v-flex fill-height>
-                
+                <v-btn @click="run()">Run iPerf!</v-btn>
             </v-flex>
         </v-layout>
     </v-container>
@@ -46,7 +46,10 @@
 import Vue from 'vue'
 import { Iperf } from '@/models/Iperf'
 import Client from '@/components/iperf/client.vue'
-
+import Server from '@/components/iperf/server.vue'
+const {spawn} = require('child_process')
+const path = require('path')
+const iperf3 = path.normalize(process.cwd()+'/src/assets/iperf/win/iperf3.exe')
 export default Vue.extend({
     data(){
         return{
@@ -55,11 +58,30 @@ export default Vue.extend({
         }
     },
     components: { 
-        Client
+        Client,
+        Server
     },
     computed: {
         presets():Array<Iperf>{
             return this.$store.state.presets.iperf
+        }
+    },
+    methods:{
+        run():void{
+            var server = spawn(iperf3, this.iperf.getServerCommand())
+            var client = spawn(iperf3, this.iperf.getClientCommand()) 
+
+            server.stdout.on('data',(data) => {
+                console.log(data.toString())
+            })
+            client.stdout.on('data',(data) => {
+                console.log(data.toString())
+            })
+
+            client.on('close', () => {
+                console.log('Killing server')
+                server.kill('SIGINT')
+            })
         }
     }
 })
