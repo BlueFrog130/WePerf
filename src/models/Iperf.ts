@@ -1,3 +1,12 @@
+import Store from 'electron-store'
+
+const store = new Store({
+    name: 'presets.config',
+    defaults: {
+        iperf: [],
+    }
+})
+
 export class Iperf {
     // TODO: Add all iperf options
     // Properties
@@ -50,6 +59,10 @@ export class Iperf {
             arr.push('-O')
             arr.push(this.client.omit.toString())
         }
+        if(this.interval){
+            arr.push('-i')
+            arr.push(this.interval.toString())
+        }
         console.log(arr)
         return arr
     }
@@ -60,6 +73,34 @@ export class Iperf {
         console.log(arr)
         return arr
     }
+    
+    public run():any{
+        const { spawn } = require('child_process')
+        var path = require('path')
+        var iperf3 = path.normalize(process.cwd()+'/src/assets/iperf/win/iperf3.exe')
+        
+        var server = spawn(iperf3, this.getServerCommand())
+        var client = spawn(iperf3, this.getClientCommand())
+
+        var returnData:any = {client, server}
+
+        server.stdout.on('data', (data:any) => {
+            console.log(JSON.parse(data.toString()))
+            returnData.server = JSON.parse(data.toString())
+        })
+        client.stdout.on('data', (data:any) => {
+            console.log(JSON.parse(data.toString()))
+            returnData.client = JSON.parse(data.toString())
+        })
+
+        client.on('close', () => {
+            console.log('killing...')
+            server.kill('SIGINT')
+        })
+
+        return returnData
+    }
+    
 }
 export interface perf{
     name?:String,

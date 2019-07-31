@@ -15,7 +15,7 @@ const store = new Store({
 export default {
     namespaced: true,
     state: {
-        iperf:<Array<Iperf>> store.get('iperf'),
+        iperf:<Array<any>> store.get('iperf'),
         mininet:<Array<any>> store.get('mininet') // TODO: Make Mininet class
     },
     mutations:{
@@ -26,6 +26,10 @@ export default {
             }
             state[added.constructor.name.toLowerCase()] = [...state[added.constructor.name.toLowerCase()], added]
         },
+        overwritePreset(state:any, added:Iperf){
+            var i = state[added.constructor.name.toLowerCase()].findIndex(i => i.name === added.name)
+            state[added.constructor.name.toLowerCase()] = state[added.constructor.name.toLowerCase()].splice(i, 1, added)
+        },
         removePreset(state:any, removed:Iperf){
             if(!state.hasOwnProperty(removed.constructor.name.toLowerCase())){
                 console.warn(`State does not have property: ${removed.constructor.name.toLowerCase()}`)
@@ -35,8 +39,13 @@ export default {
         }
     },
     actions:{
-        addPreset({commit, dispatch}, added:Iperf ){
-            commit('addPreset', added)
+        addPreset({state, commit, dispatch}, added:Iperf ){
+            if(state[added.constructor.name.toLowerCase()].find(i => i.name === added.name)){
+                commit('overwritePreset', added)
+            }
+            else{
+                commit('addPreset', added)
+            }
             dispatch('savePreset', added.constructor.name.toLowerCase())
         },
         removePreset({commit, dispatch}, removed:Iperf ){

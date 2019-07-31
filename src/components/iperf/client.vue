@@ -2,7 +2,7 @@
     <v-container>
         <h6 class="headline text-center">Client</h6>
         <v-form ref="client" v-model="clientRules.valid">
-            <v-container grid-list-lg>
+            <v-container grid-list-lg fluid>
                 <v-layout wrap>
                     <v-flex lg4>
                         <v-text-field required 
@@ -44,6 +44,13 @@
                                       v-model="iperf.client.time"
                                       :hint="`Seconds`"/>
                     </v-flex>
+                    <v-flex lg2>
+                        <v-text-field label="Interval" 
+                                      type="number"
+                                      color="info"
+                                      v-model="iperf.interval"
+                                      :hint="`Seconds`"/>
+                    </v-flex>
                      <v-flex lg1>
                         <v-text-field label="Omit"  
                                       type="number"
@@ -56,7 +63,7 @@
                                     color="info"
                                     hint="Reverses Flow"
                                     v-model="iperf.client.reverse"/>
-                    </v-flex>                   
+                    </v-flex>       
                 </v-layout>
             </v-container>
         </v-form>

@@ -42,5 +42,6 @@ export default {
 #main{
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 }
 </style>

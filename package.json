@@ -21,6 +21,7 @@
     "@rauschma/stringio": "^1.4.0",
     "core-js": "^2.6.5",
     "electron-store": "^4.0.0",
+    "simplebar-vue": "^1.1.0",
     "ssh2": "^0.8.5",
     "vue": "^2.6.10",
     "vue-resizable": "^1.0.15",
