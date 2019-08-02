@@ -10,11 +10,12 @@ const store = new Store({
 export class Iperf {
     // TODO: Add all iperf options
     // Properties
-    public name?:String;
-    public interval?:Number;
+    public name?:string;
+    public interval?:number;
     public format?:Format;
     public client:Client;
     public server:Server;
+    public port?:number
 
     // Constructors
     constructor(iperf?:perf){
@@ -23,6 +24,7 @@ export class Iperf {
         this.format = iperf && iperf.format
         this.client = { protocol: Protocol.TCP, units: Units.K, reverse: false }
         this.server = {}
+        this.port = iperf && iperf.port
     }
 
     // Methods
@@ -52,7 +54,7 @@ export class Iperf {
             arr.push('-t')
             arr.push(this.client.time.toString())
         }
-        if(this.client.reverse == true){
+        if(this.client && this.client.reverse == true){
             arr.push('-R')
         }
         if(this.client.omit){
@@ -63,18 +65,26 @@ export class Iperf {
             arr.push('-i')
             arr.push(this.interval.toString())
         }
-        console.log(arr)
+        if(this.port){
+            arr.push('-p')
+            arr.push(this.port.toString())
+        }
         return arr
     }
     public getServerCommand():Array<String> {
         var arr = new Array<String>()
         arr.push('-J')
         arr.push('-s')
-        console.log(arr)
+        if(this.interval){
+            arr.push('-i')
+            arr.push(this.interval.toString())
+        }
         return arr
     }
     
     public run():any{
+        this.undefinedConverter()
+
         const { spawn } = require('child_process')
         var path = require('path')
         var iperf3 = path.normalize(process.cwd()+'/src/assets/iperf/win/iperf3.exe')
@@ -100,14 +110,38 @@ export class Iperf {
 
         return returnData
     }
+
+    public undefinedConverter():void
+    {
+        this.interval = (this.interval == 0) ? undefined : this.interval
+        this.name = (this.name == '') ? undefined : this.name
+        this.port = (this.port == 0) ? undefined : this.port
+        var clientKeys = Object.keys(this.client) as any[]
+        for(var i = 0; i < clientKeys.length; i++)
+        {
+            if(this.client[clientKeys[i]] == 0 || this.client[clientKeys[i]] == '')
+            {
+                this.client[clientKeys[i]] = undefined
+            }
+        }
+        var serverKeys = Object.keys(this.server) as any[]
+        for(i = 0; i < serverKeys.length; i++)
+        {
+            if(this.server[serverKeys[i]] == 0 || this.server[serverKeys[i]] == '')
+            {
+                this.server[serverKeys[i]] = undefined
+            }
+        }
+    }
     
 }
 export interface perf{
-    name?:String,
-    interval?:Number,
+    name?:string,
+    interval?:number,
     format?:Format,
     client:Client,
-    server:Server
+    server:Server,
+    port?:number
 }
 export interface Client{
     remote?:String,    // NOT IPERF -- option to ssh into another device and run ssh

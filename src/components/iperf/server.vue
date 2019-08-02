@@ -1,6 +1,5 @@
 <template>
     <v-container>
-        <h6 class="headline text-center">Server</h6>
         <v-form ref="server" v-model="serverRules.valid">
             <v-container grid-list-lg>
                 <v-layout wrap>

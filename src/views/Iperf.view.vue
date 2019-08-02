@@ -43,15 +43,29 @@
             </v-flex>
             <v-divider/>
             <!-- Content/Configuration -->
-            <v-layout fill-height fluid>
+            <v-layout fluid>
                 <!-- Client -->
-                <v-flex class="scroll-flex">
-                    <client :iperf.sync="iperf"/>
-                </v-flex>
-                <v-divider vertical/>
-                <!-- Server -->
                 <v-flex>
-                    <server :iperf.sync="iperf"/>
+                    <v-expansion-panels accordion :value="expansionValue">
+                        <v-expansion-panel>
+                            <v-expansion-panel-header><span class="title font-weight-thin">Base Settings</span></v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <base-settings :iperf.sync="iperf"/>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                        <v-expansion-panel>
+                            <v-expansion-panel-header><span class="title font-weight-thin">Client Settings</span></v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <client :iperf.sync="iperf"/>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                        <v-expansion-panel>
+                            <v-expansion-panel-header><span class="title font-weight-thin">Server Settings</span></v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <server :iperf.sync="iperf"/>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
                 </v-flex>
             </v-layout>
             <v-divider/>
@@ -68,6 +82,7 @@ import Vue from 'vue'
 import { Iperf } from '@/models/Iperf'
 import Client from '@/components/iperf/client.vue'
 import Server from '@/components/iperf/server.vue'
+import BaseSettings from '@/components/iperf/BaseSettings.vue'
 
 export default Vue.extend({
     data(){
@@ -75,11 +90,13 @@ export default Vue.extend({
             iperf: new Iperf(),
             data: {},
             dialog: false,
+            expansionValue: 0
         }
     },
     components: { 
         Client,
         Server,
+        BaseSettings
     },
     computed: {
         presets():Array<Iperf>{

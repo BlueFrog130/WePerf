@@ -1,6 +1,5 @@
 <template>
     <v-container>
-        <h6 class="headline text-center">Client</h6>
         <v-form ref="client" v-model="clientRules.valid">
             <v-container grid-list-lg fluid>
                 <v-layout wrap>
@@ -42,13 +41,6 @@
                                       type="number"
                                       color="info"
                                       v-model="iperf.client.time"
-                                      :hint="`Seconds`"/>
-                    </v-flex>
-                    <v-flex lg2>
-                        <v-text-field label="Interval" 
-                                      type="number"
-                                      color="info"
-                                      v-model="iperf.interval"
                                       :hint="`Seconds`"/>
                     </v-flex>
                      <v-flex lg1>
