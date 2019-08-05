@@ -5,14 +5,19 @@ import '@mdi/font/css/materialdesignicons.css'
 
 Vue.use(Vuetify);
 
-export default new Vuetify({
-  icons: {
+export default new Vuetify
+({
+  icons:
+  {
     iconfont: 'mdi',
   },
-  theme:{
+  theme:
+  {
     dark: true,
-    themes:{
-      light:{
+    themes:
+    {
+      light:
+      {
         primary: colors.purple.base,
         secondary: colors.blue.lighten1,
         accent: colors.indigo.darken1, 
@@ -23,7 +28,8 @@ export default new Vuetify({
         background: colors.indigo.lighten5,
         sidebar: colors.indigo.lighten4,
       },
-      dark:{
+      dark:
+      {
         primary: colors.pink.darken4,
         secondary: colors.indigo.darken3,
         accent: colors.pink.accent4,

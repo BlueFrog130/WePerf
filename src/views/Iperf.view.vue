@@ -43,35 +43,35 @@
             </v-flex>
             <v-divider/>
             <!-- Content/Configuration -->
-            <v-layout fluid>
+            <v-layout fluid class="py-2">
                 <!-- Client -->
                 <v-flex>
-                    <v-expansion-panels accordion :value="expansionValue">
-                        <v-expansion-panel>
-                            <v-expansion-panel-header><span class="title font-weight-thin">Base Settings</span></v-expansion-panel-header>
-                            <v-expansion-panel-content>
-                                <base-settings :iperf.sync="iperf"/>
-                            </v-expansion-panel-content>
-                        </v-expansion-panel>
-                        <v-expansion-panel>
-                            <v-expansion-panel-header><span class="title font-weight-thin">Client Settings</span></v-expansion-panel-header>
-                            <v-expansion-panel-content>
-                                <client :iperf.sync="iperf"/>
-                            </v-expansion-panel-content>
-                        </v-expansion-panel>
-                        <v-expansion-panel>
-                            <v-expansion-panel-header><span class="title font-weight-thin">Server Settings</span></v-expansion-panel-header>
-                            <v-expansion-panel-content>
-                                <server :iperf.sync="iperf"/>
-                            </v-expansion-panel-content>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
+                    <v-tabs vertical color="info">
+                        <v-tab>
+                            <span class="subheader font-weight-thin">Base Settings</span>
+                        </v-tab>
+                        <v-tab-item>
+                            <base-settings :iperf.sync="iperf"/>
+                        </v-tab-item>
+                        <v-tab>
+                            <span class="subheader font-weight-thin">Client Settings</span>
+                        </v-tab>
+                        <v-tab-item>
+                            <client :iperf.sync="iperf"/>
+                        </v-tab-item>
+                        <v-tab>
+                            <span class="subheader font-weight-thin">Server Settings</span>
+                        </v-tab>
+                        <v-tab-item>
+                            <server :iperf.sync="iperf"/>
+                        </v-tab-item>
+                    </v-tabs>
                 </v-flex>
             </v-layout>
             <v-divider/>
             <!-- Graph -->
             <v-flex fill-height>
-                <v-btn @click="data = iperf.run()">Run iPerf!</v-btn>
+                <Data :data="data"/>
             </v-flex>
         </v-layout>
     </v-container>
@@ -82,49 +82,52 @@ import Vue from 'vue'
 import { Iperf } from '@/models/Iperf'
 import Client from '@/components/iperf/client.vue'
 import Server from '@/components/iperf/server.vue'
+import Data from '@/components/iperf/data.vue'
 import BaseSettings from '@/components/iperf/BaseSettings.vue'
 
 export default Vue.extend({
-    data(){
-        return{
-            iperf: new Iperf(),
-            data: {},
-            dialog: false,
-            expansionValue: 0
-        }
-    },
-    components: { 
+    data: () => 
+    ({
+        iperf: new Iperf(),
+        data: {},
+        dialog: false,
+        expansionValue: 0
+    }),
+    components:
+    { 
         Client,
         Server,
-        BaseSettings
+        BaseSettings,
+        Data
     },
-    computed: {
-        presets():Array<Iperf>{
+    computed:
+    {
+        presets():Array<Iperf>
+        {
             return this.$store.state.presets.iperf
         }
     },
-    methods:{
-        applySelection(selection:object):void{
-            for(var key in selection){
-                if(this.iperf.hasOwnProperty(key)){
+    methods:
+    {
+        applySelection(selection:object):void
+        {
+            for(var key in selection)
+            {
+                if(this.iperf.hasOwnProperty(key))
+                {
                     this.iperf[key] = selection[key]
                 }
             }
         },
-        save():void{
+        save():void
+        {
            this.dialog = false
            this.$store.dispatch('presets/addPreset', this.iperf)
-       },
-       resetIperf():void{
+        },
+        resetIperf():void
+        {
            this.iperf = new Iperf()
-       }
+        }
     }
 })
 </script>
-
-<style lang="scss">
-.scroll-flex{
-    overflow-y:auto;
-    height:100%;
-}
-</style>

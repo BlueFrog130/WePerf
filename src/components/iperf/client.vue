@@ -1,14 +1,47 @@
 <template>
     <v-container>
+        <p>The client will automatically connect to the server address</p>
         <v-form ref="client" v-model="clientRules.valid">
             <v-container grid-list-lg fluid>
-                <v-layout wrap>
+                <v-layout align-center wrap >
+                    <!--
                     <v-flex lg4>
                         <v-text-field required 
                                       :rules="clientRules.requiredRule"
                                       label="Host" 
                                       color="info" 
                                       v-model="iperf.client.host"/>
+                    </v-flex>
+                    -->
+                    <v-flex shrink>
+                        <v-dialog v-model="remote" persistent max-width="50%">
+                            <template v-slot:activator="{ on }">
+                                <v-btn v-on="on" color="accent">Remote</v-btn>
+                            </template>
+                            <v-card>
+                                <v-card-title>
+                                    <span class="headline">Remote Client</span>
+                                </v-card-title>
+                                <v-card-text>
+                                    <p>This will remote connect to a virtual machine or another machine on the network and execute iPerf command. <span class="error--text">Must Have iPerf3 installed!</span> Currently only availible with Linux based machines</p>
+                                    <v-layout wrap justify-space-around>
+                                        <v-flex xs11>
+                                            <v-text-field color="info" label="Remote IP" v-model="iperf.client.remote.ip"></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs5>
+                                            <v-text-field color="info" label="User" v-model="iperf.client.remote.user"></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs5>
+                                            <v-text-field color="info" label="Password" v-model="iperf.client.remote.password"></v-text-field>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-btn color="warning" @click="remote = false">Close</v-btn>
+                                    <v-btn color="success" @click="connect()">Connect</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
                     </v-flex>
                     <v-flex lg1>
                         <v-select required 
@@ -55,7 +88,7 @@
                                     color="info"
                                     hint="Reverses Flow"
                                     v-model="iperf.client.reverse"/>
-                    </v-flex>       
+                    </v-flex>
                 </v-layout>
             </v-container>
         </v-form>
@@ -66,18 +99,28 @@
 import Vue from 'vue'
 import { Iperf } from '@/models/Iperf';
 export default Vue.extend({
-    props:{
-        iperf:{
+    props:
+    {
+        iperf:
+        {
             type: Object as () => Iperf
         }
     },
-    data(){
-        return{
-            protocols: require('@/models/Iperf').Protocol,
-            clientRules:{
-                valid: false,
-                requiredRule: [ r => !!r || 'Required' ]
-            }
+    data: () => 
+    ({
+        protocols: require('@/models/Iperf').Protocol,
+        clientRules:{
+            valid: false,
+            requiredRule: [ r => !!r || 'Required' ]
+        },
+        remote: false,
+    }),
+    methods:
+    {
+        connect():void
+        {
+            this.remote = false
+            this.$emit('remoteClient')
         }
     }
 })

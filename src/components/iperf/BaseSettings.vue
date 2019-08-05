@@ -2,7 +2,7 @@
     <v-container>
         <v-form ref="base" v-model="valid">
             <v-container grid-list-lg fluid>
-                <v-layout wrap>
+                <v-layout wrap align-center>
                     <v-flex>
                         <v-text-field required
                                       label="Interval"
@@ -16,10 +16,9 @@
                         <v-text-field label="Port"
                                       color="info"
                                       type="number"
-                                      v-model="iperf.interval"
+                                      v-model="iperf.port"
                                       :hint="'Not Required'"/>
                     </v-flex>
-                    <v-btn @click="t()">t</v-btn>
                 </v-layout>
             </v-container>
         </v-form>
@@ -30,19 +29,17 @@
 import Vue from 'vue'
 import { Iperf } from '../../models/Iperf';
 export default Vue.extend({
-    data: () => ({
+    data: () => 
+    ({
         valid: false,
     }),
-    props:{
-        iperf:{
+    props:
+    {
+        iperf:
+        {
             type: Object as () => Iperf
         }
     },
-    methods:{
-        t():void{
-            this.iperf.undefinedConverter()
-        }
-    }
 })
 </script>
 

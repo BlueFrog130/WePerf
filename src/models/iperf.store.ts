@@ -9,7 +9,8 @@ const store = new Store({
     }
 })
 
-export default {
+export default 
+{
     namespaced: true,
     state: {
         iperfs: store.get('iperfs')
