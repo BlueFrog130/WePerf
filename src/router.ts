@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Iperf from './views/Iperf.view'
-import Mininet from './views/Mininet.view'
-
+import Iperf from './views/Iperf.view.vue'
+import Mininet from './views/Mininet.view.vue'
+import Styling from './views/Styling.vue'
 
 Vue.use(Router)
 
@@ -11,8 +11,9 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      name: 'styles',
       path: '/',
-      redirect: '/iperf'
+      component: Styling
     },
     {
       name: 'iperf',
@@ -26,7 +27,7 @@ export default new Router({
     },
     {
       path: '*',
-      redirect: '/iperf'
+      redirect: '/styles'
     },
   ]
 })

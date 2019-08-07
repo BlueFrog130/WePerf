@@ -5,6 +5,7 @@
             <span class="font-weight-bold  title">Perf</span>
             <v-btn x-small icon class="no-drag pl-2" id="system-bar-icon" @click="openPage('https://github.com/BlueFrog130/WePerf', $event)"><v-icon>mdi-github-circle</v-icon></v-btn>
             <v-spacer></v-spacer>
+            <v-btn icon tile class="no-drag pl-2 mr-5" @click="$vuetify.theme.dark = !$vuetify.theme.dark" x-small><v-icon>{{modeIcon}}</v-icon></v-btn>
             <v-btn icon tile class="no-drag pl-2" @click="minimize($event)" x-small><v-icon>mdi-window-minimize</v-icon></v-btn>
             <v-btn icon tile class="no-drag pl-2" @click="maximize($event)" x-small><v-icon>mdi-window-restore</v-icon></v-btn>
             <v-btn icon tile class="no-drag pl-2" @click="close($event)" x-small><v-icon>mdi-window-close</v-icon></v-btn>
@@ -16,6 +17,11 @@
 const {remote, shell} = require('electron');
 const window = remote.getCurrentWindow();
 export default {
+    computed:{
+        modeIcon(){
+            return !this.$vuetify.theme.dark ? 'mdi-weather-night' : 'mdi-weather-sunny'
+        }
+    },
     methods:{
         minimize(e){
             window.minimize();
