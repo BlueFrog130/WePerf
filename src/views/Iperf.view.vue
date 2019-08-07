@@ -46,32 +46,54 @@
             <v-layout fluid class="py-2">
                 <!-- Client -->
                 <v-flex>
-                    <v-tabs vertical color="info">
-                        <v-tab>
-                            <span class="subheader font-weight-thin">Base Settings</span>
-                        </v-tab>
-                        <v-tab-item>
-                            <base-settings :iperf.sync="iperf"/>
-                        </v-tab-item>
-                        <v-tab>
-                            <span class="subheader font-weight-thin">Client Settings</span>
-                        </v-tab>
-                        <v-tab-item>
-                            <client :iperf.sync="iperf"/>
-                        </v-tab-item>
-                        <v-tab>
-                            <span class="subheader font-weight-thin">Server Settings</span>
-                        </v-tab>
-                        <v-tab-item>
-                            <server :iperf.sync="iperf"/>
-                        </v-tab-item>
-                    </v-tabs>
+                    <v-card flat color="background">
+                        <v-card-text>
+                            <v-tabs background-color="transparent" vertical color="info">
+                                <v-tab>
+                                    <span class="subheader font-weight-regular">Base Settings</span>
+                                </v-tab>
+                                <v-tab>
+                                    <span class="subheader font-weight-regular">Client Settings</span>
+                                </v-tab>
+                                <v-tab>
+                                    <span class="subheader font-weight-regular">Server Settings</span>
+                                </v-tab>
+                                <v-tab-item>
+                                    <v-card flat color="background">
+                                        <v-card-text>
+                                            <base-settings :iperf.sync="iperf"/>
+                                        </v-card-text>
+                                    </v-card>
+                                </v-tab-item>                                
+                                <v-tab-item>
+                                    <v-card flat color="background">
+                                        <v-card-text>
+                                            <client :iperf.sync="iperf"/>
+                                        </v-card-text>
+                                    </v-card>
+                                </v-tab-item>                                
+                                <v-tab-item>
+                                    <v-card flat color="background">
+                                        <v-card-text>
+                                            <server :iperf.sync="iperf"/>
+                                        </v-card-text>
+                                    </v-card>
+                                </v-tab-item>
+                            </v-tabs>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer/>
+                            <v-btn color="accent" @click="onRun()">Run</v-btn>
+                            <v-spacer/>
+                        </v-card-actions>
+                    </v-card>
                 </v-flex>
             </v-layout>
             <v-divider/>
             <!-- Graph -->
-            <v-flex fill-height>
-                <Data :data="data"/>
+            <v-flex class="pa-5" id="graph" fill-height>
+                <Data v-if="dataFilled" :results="results" :interval="parseFloat(iperf.interval)" :height="height"/>
+                <v-progress-linear v-else-if="progressActive" height="10" :indeterminate="indeterminate"></v-progress-linear>
             </v-flex>
         </v-layout>
     </v-container>
@@ -84,14 +106,32 @@ import Client from '@/components/iperf/client.vue'
 import Server from '@/components/iperf/server.vue'
 import Data from '@/components/iperf/data.vue'
 import BaseSettings from '@/components/iperf/BaseSettings.vue'
+import { results } from '@/models/iperf.interfaces'
+
+interface Data
+{
+    client?:results,
+    server?:results
+}
+
+enum States
+{
+    initial = 0,
+    running = 1,
+    hasData = 2
+}
 
 export default Vue.extend({
     data: () => 
     ({
         iperf: new Iperf(),
-        data: {},
+        results: {
+            client: undefined,
+            server: undefined
+        } as Data,
         dialog: false,
-        expansionValue: 0
+        expansionValue: 0,
+        state: States.initial
     }),
     components:
     { 
@@ -105,6 +145,46 @@ export default Vue.extend({
         presets():Array<Iperf>
         {
             return this.$store.state.presets.iperf
+        },
+        progressActive():boolean
+        {
+            return !(this.state == States.initial)
+        },
+        indeterminate():boolean
+        {
+            return (this.state == States.running)
+        },
+        dataFilled():boolean
+        {
+            return (this.state == States.hasData)
+        },
+        height():number
+        {
+            if(document.getElementById('graph') != null)
+            {
+                // @ts-ignore
+                console.log(document.getElementById('graph').clientHeight)
+                // @ts-ignore
+                return document.getElementById('graph').clientHeight
+            }
+            else
+            {
+                return 100;
+            }
+        }
+    },
+    watch:
+    {
+        results:
+        {
+            deep: true,
+            handler()
+            {
+                if(this.results.client && this.results.server )
+                {
+                    this.state = States.hasData
+                }
+            }   
         }
     },
     methods:
@@ -127,6 +207,11 @@ export default Vue.extend({
         resetIperf():void
         {
            this.iperf = new Iperf()
+        },
+        onRun():void
+        {
+            this.results = this.iperf.run()
+            this.state = States.running
         }
     }
 })

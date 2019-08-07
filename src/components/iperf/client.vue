@@ -4,15 +4,6 @@
         <v-form ref="client" v-model="clientRules.valid">
             <v-container grid-list-lg fluid>
                 <v-layout align-center wrap >
-                    <!--
-                    <v-flex lg4>
-                        <v-text-field required 
-                                      :rules="clientRules.requiredRule"
-                                      label="Host" 
-                                      color="info" 
-                                      v-model="iperf.client.host"/>
-                    </v-flex>
-                    -->
                     <v-flex shrink>
                         <v-dialog v-model="remote" persistent max-width="50%">
                             <template v-slot:activator="{ on }">
@@ -43,7 +34,14 @@
                             </v-card>
                         </v-dialog>
                     </v-flex>
-                    <v-flex lg1>
+                    <v-flex shrink>
+                        <v-text-field label="Server IP"
+                                      hint="Remote Server IP used if blank"
+                                      v-model="iperf.client.host"
+                                      color="info"/>
+
+                    </v-flex>
+                    <v-flex shrink>
                         <v-select required 
                                   :rules="clientRules.requiredRule" 
                                   label="Protocol" color="info" 
@@ -51,7 +49,7 @@
                                   :items="Object.keys(protocols)" 
                                   v-model="iperf.client.protocol"/>
                     </v-flex>
-                    <v-flex lg2>
+                    <v-flex shrink>
                         <v-text-field label="Bandwidth" 
                                       :rules="[v => !!v || 'Required', v => v > 0 || 'Cannot be less than 0']" 
                                       type="number"
@@ -59,7 +57,7 @@
                                       v-model="iperf.client.bandwidth"
                                       :hint="`${iperf.client.units}bit/s`"/>
                     </v-flex>
-                    <v-flex lg1>
+                    <v-flex shrink>
                         <v-select required 
                                   :rules="clientRules.requiredRules" 
                                   label="Units" color="info" 
@@ -68,7 +66,7 @@
                                   v-model="iperf.client.units"
                                   :hint="`${iperf.client.units}bit/s`"/>
                     </v-flex>
-                    <v-flex lg1>
+                    <v-flex shrink>
                         <v-text-field label="Time" 
                                       :rules="[v => !!v || 'Required', v => v > 0 || 'Cannot be less than 0']" 
                                       type="number"
@@ -76,14 +74,14 @@
                                       v-model="iperf.client.time"
                                       :hint="`Seconds`"/>
                     </v-flex>
-                     <v-flex lg1>
+                     <v-flex shrink>
                         <v-text-field label="Omit"  
                                       type="number"
                                       color="info"
                                       v-model="iperf.client.omit"
                                       :hint="`Seconds`"/>
                     </v-flex>
-                    <v-flex lg2>
+                    <v-flex shrink>
                         <v-checkbox label="Reverse"
                                     color="info"
                                     hint="Reverses Flow"

@@ -127,11 +127,11 @@ export class Iperf
         {
             var client = spawn(iperf3, this.getClientCommand())
             client.stdout.on('data', (data:any) => {
-                console.log(JSON.parse(data.toString()))
+                //console.log(JSON.parse(data.toString()))
                 returnData.client = JSON.parse(data.toString())
             })
             client.on('close', () => {
-                console.log('killing...')
+                //console.log('killing...')
                 server.kill('SIGINT')
             })
         }
@@ -144,12 +144,11 @@ export class Iperf
         {
             var server = spawn(iperf3, this.getServerCommand())
             server.stdout.on('data', (data:any) => {
-                console.log(JSON.parse(data.toString()))
+                //console.log(JSON.parse(data.toString()))
                 returnData.server = JSON.parse(data.toString())
             })
 
         }
-
         return returnData
     }
 

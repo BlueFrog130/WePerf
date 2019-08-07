@@ -3,7 +3,7 @@
         <v-form ref="base" v-model="valid">
             <v-container grid-list-lg fluid>
                 <v-layout wrap align-center>
-                    <v-flex>
+                    <v-flex shrink>
                         <v-text-field required
                                       label="Interval"
                                       color="info"
@@ -12,7 +12,7 @@
                                       v-model="iperf.interval"
                                       :hint="'Seconds'"/>
                     </v-flex>
-                    <v-flex>
+                    <v-flex shrink>
                         <v-text-field label="Port"
                                       color="info"
                                       type="number"

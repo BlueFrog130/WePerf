@@ -106,3 +106,8 @@ if (isDevelopment) {
     })
   }
 }
+
+// Catching unexpected errors...
+process.on('uncaughtException', (err) => {
+  console.error(err)
+})

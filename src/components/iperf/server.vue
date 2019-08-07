@@ -4,7 +4,7 @@
         <v-form ref="server" v-model="serverRules.valid">
             <v-container grid-list-lg>
                 <v-layout wrap align-center>
-                    <v-flex lg2>
+                    <v-flex shrink>
                         <v-dialog v-model="remote" persistent max-width="50%">
                             <template v-slot:activator="{ on }">
                                 <v-btn v-on="on" color="accent">Remote</v-btn>
