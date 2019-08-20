@@ -91,7 +91,7 @@
             </v-layout>
             <v-divider/>
             <!-- Graph -->
-            <v-flex class="pa-5" id="graph" fill-height>
+            <v-flex class="pa-5" id="graph" v-resize="onResize" fill-height>
                 <Data v-if="dataFilled" :results="results" :interval="parseFloat(iperf.interval)" :height="height"/>
                 <v-progress-linear v-else-if="progressActive" height="10" :indeterminate="indeterminate"></v-progress-linear>
             </v-flex>
@@ -131,7 +131,8 @@ export default Vue.extend({
         } as Data,
         dialog: false,
         expansionValue: 0,
-        state: States.initial
+        state: States.initial,
+        height: 0
     }),
     components:
     { 
@@ -158,20 +159,6 @@ export default Vue.extend({
         {
             return (this.state == States.hasData)
         },
-        height():number
-        {
-            if(document.getElementById('graph') != null)
-            {
-                // @ts-ignore
-                console.log(document.getElementById('graph').clientHeight)
-                // @ts-ignore
-                return document.getElementById('graph').clientHeight
-            }
-            else
-            {
-                return 100;
-            }
-        }
     },
     watch:
     {
@@ -186,6 +173,10 @@ export default Vue.extend({
                 }
             }   
         }
+    },
+    mounted()
+    {
+        this.onResize()
     },
     methods:
     {
@@ -212,6 +203,15 @@ export default Vue.extend({
         {
             this.results = this.iperf.run()
             this.state = States.running
+        },
+        onResize():void
+        {
+            var graphElement = document.getElementById('graph')
+
+            if(graphElement != null)
+            {
+                this.height = graphElement.clientHeight
+            }
         }
     }
 })

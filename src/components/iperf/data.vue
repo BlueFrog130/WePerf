@@ -1,5 +1,8 @@
 <template>
     <v-sheet id="chart-container" :height="height-50" width="100%" light color="white">
+        <v-select label="Chart Units" :items="Object.values(units)" @change="setUnits">
+
+        </v-select>
         <apex-chart width=100% height=100% type="line" :series="series" :options="options" />
     </v-sheet>
 </template>
@@ -21,6 +24,13 @@ interface Series
     data:Array<number>
 }
 
+enum Units 
+{
+    KB = "KiloBytes",
+    MB = "MegaBytes",
+    Bytes = "Bytes"
+}
+
 export default Vue.extend({
     components:
     {
@@ -34,11 +44,12 @@ export default Vue.extend({
     },
     data: () => ({
         series: [] as Array<Series>,
-        options:{}
+        options:{},
+        currentUnits: Units.Bytes,
+        units: Units
     }),
     mounted()
     {
-        console.log('mounted')
         this.shred()
     },
     computed:
@@ -95,7 +106,6 @@ export default Vue.extend({
                     horizontalAlign:'right'
                 }
             }
-
         },
 
         /**
@@ -128,6 +138,62 @@ export default Vue.extend({
                 axis.push(num)
             }
             return axis
+        },
+
+        setUnits(unit:Units):void
+        {
+            var scalar:number;
+            var unscalar:number;
+
+            switch(unit)
+            {
+                case Units.KB:
+                    scalar = 0.001
+                    break
+
+                case Units.MB:
+                    scalar = 0.000001
+                    break
+                
+                default:
+                    scalar = 1
+                    break
+            }
+            
+            switch(this.currentUnits)
+            {
+                case Units.KB:
+                    unscalar = 1000
+                    break
+
+                case Units.MB:
+                    unscalar = 1000000
+                    break
+                
+                default:
+                    unscalar = 1
+                    break
+            }
+
+            this.series.forEach((value:Series, i:number) => {
+                value.data.forEach((num:number, j:number) => {
+                    this.series[i].data[j] = this.series[i].data[j]*unscalar;
+                    this.series[i].data[j] = this.series[i].data[j]*scalar;
+                })
+            })
+
+            this.currentUnits = unit
+
+            this.options = {
+                ...this.options,
+                ...{
+                    yaxis:{
+                        title:{
+                            text:this.currentUnits
+                        }
+                    }
+                }
+            }
         }
     },
 })
